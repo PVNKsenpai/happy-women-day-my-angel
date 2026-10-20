@@ -220,8 +220,10 @@ function createFallingItem(){
     if(!img.isConnected) return;
     openPhoto(img.currentSrc || img.src);
   });
-  item.style.left=(Math.random()*92)+"vw";
-  item.style.setProperty("--x",(Math.random()*260-130)+"px");
+  const cardW=window.innerWidth<600?82:112;
+  const maxLeft=Math.max(8,window.innerWidth-cardW-12);
+  item.style.left=Math.floor(Math.random()*maxLeft)+"px";
+  item.style.setProperty("--x",(Math.random()*48-24)+"px");
   item.style.setProperty("--r",(Math.random()*34-17)+"deg");
   item.style.setProperty("--d",(5+Math.random()*5)+"s");
   fallBox.appendChild(item);
