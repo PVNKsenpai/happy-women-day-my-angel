@@ -86,13 +86,13 @@ body{
 @keyframes heart-pulse{
   50%{transform:scale(1.2);opacity:.7}
 }
-.lock{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:100%;max-width:380px;margin:0 auto}
+.lock{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;width:100%;max-width:420px;margin:0 auto}
 .lock--shake{animation:lock-shake .4s}
-.lock__input{flex:1;min-width:160px;padding:14px 18px;border:1px solid rgba(255,190,205,.38);border-radius:999px;color:#fff;font:400 13px Montserrat,sans-serif;background:rgba(255,255,255,.07);outline:none;backdrop-filter:blur(16px)}
+.lock__input{flex:1 1 0;min-width:0;padding:14px 18px;border:1px solid rgba(255,190,205,.38);border-radius:999px;color:#fff;font:400 13px Montserrat,sans-serif;background:rgba(255,255,255,.07);outline:none;backdrop-filter:blur(16px)}
 .lock__input::placeholder{color:rgba(255,232,238,.45)}
 .lock__input:focus{box-shadow:0 0 18px rgba(227,101,137,.35);border-color:rgba(255,204,216,.7)}
-.lock__msg{width:100%;min-height:1.3em;margin-top:4px;color:#ffb3c1;font-size:13px}
-.glass-btn{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:#fff;padding:15px 27px;border-radius:999px;font:500 12px Montserrat;letter-spacing:1.5px;cursor:pointer;backdrop-filter:blur(16px);box-shadow:0 10px 35px rgba(0,0,0,.2);transition:.4s}
+.lock__msg{flex:1 0 100%;min-height:1.3em;margin-top:4px;color:#ffb3c1;font-size:13px}
+.glass-btn{flex:0 0 auto;white-space:nowrap;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:#fff;padding:15px 27px;border-radius:999px;font:500 12px Montserrat;letter-spacing:1.5px;cursor:pointer;backdrop-filter:blur(16px);box-shadow:0 10px 35px rgba(0,0,0,.2);transition:.4s}
 .glass-btn:hover{transform:translateY(-3px);background:rgba(255,255,255,.13);box-shadow:0 15px 45px rgba(227,101,137,.22)}
 .glass-btn:disabled{opacity:.6;cursor:wait;transform:none}
 .btn-heart{font-size:20px;vertical-align:-2px;margin-right:8px}
@@ -156,6 +156,10 @@ body{
 @keyframes bouquetSway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(3deg)}}
 @keyframes eq{to{height:12px}}
 @media(max-width:600px){
+  .lock{gap:8px}
+  .lock__input{padding:12px 14px;font-size:12px}
+  .glass-btn{padding:12px 14px;letter-spacing:.3px;font-size:11px}
+  .btn-heart{margin-right:4px;font-size:16px}
   .envelope{height:235px}.paper-inner{padding:20px 23px}.paper-title{font-size:24px}
   #typedText{font-size:15px;line-height:1.6}.wax{width:50px;height:50px}
   .final h2{font-size:54px}.final-copy{font-size:20px}
