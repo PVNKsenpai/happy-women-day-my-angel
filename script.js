@@ -13,8 +13,7 @@ const lockMsg = $("#lockMsg");
 const startBtn = $("#startBtn");
 const typedText = $("#typedText");
 const music = $("#music");
-const musicPill = $("#musicPill");
-const musicBtn = $("#musicBtn");
+const musicDisc = $("#musicDisc");
 const rereadBtn = $("#rereadBtn");
 const tapHint = $("#tapHint");
 
@@ -71,12 +70,19 @@ function startPetals(){
   petalTimer=setInterval(petal,650);
 }
 
+function syncDisc(){
+  const on = !music.paused;
+  musicDisc.classList.toggle("is-on", on);
+  musicDisc.setAttribute("aria-pressed", on ? "true" : "false");
+}
+
 async function playMusic(){
   music.volume=.55;
+  musicDisc.classList.add("show");
   try{
     await music.play();
-    musicPill.classList.add("show");
   }catch(e){}
+  syncDisc();
 }
 
 function showScreen(screen){
@@ -173,13 +179,11 @@ rereadBtn.addEventListener("click",()=>{
   revealLetter();
 });
 
-musicBtn.addEventListener("click",()=>{
-  if(music.paused){
-    music.play();
-    musicBtn.querySelector("span").textContent="Nhạc đang phát";
-  }else{
+musicDisc.addEventListener("click",()=>{
+  if(music.paused) playMusic();
+  else{
     music.pause();
-    musicBtn.querySelector("span").textContent="Nhạc đã tạm dừng";
+    syncDisc();
   }
 });
 
@@ -218,7 +222,7 @@ function createFallingItem(){
   item.addEventListener("click",(e)=>{
     e.stopPropagation();
     if(!img.isConnected) return;
-    openPhoto(img.currentSrc || img.src);
+    openPhoto(img.currentSrc || img.src, wish.textContent);
   });
   const cardW=window.innerWidth<600?82:112;
   const maxLeft=Math.max(8,window.innerWidth-cardW-12);
@@ -238,9 +242,11 @@ function startPhotoRain(){
 }
 const photoZoom = document.getElementById("photoZoom");
 const photoZoomImg = document.getElementById("photoZoomImg");
+const photoZoomWish = document.getElementById("photoZoomWish");
 
-function openPhoto(src){
+function openPhoto(src, wish){
   photoZoomImg.src = src;
+  photoZoomWish.textContent = wish || "";
   photoZoom.hidden = false;
   requestAnimationFrame(()=>photoZoom.classList.add("show"));
 }

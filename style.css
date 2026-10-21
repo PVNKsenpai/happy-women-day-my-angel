@@ -17,7 +17,9 @@ body{
 .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:twinkle 3s ease-in-out infinite}
 .screen{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
 .screen.active{opacity:1;z-index:45;pointer-events:none}
-.screen.active .intro-card,.screen.active .envelope,.screen.active .final-card{pointer-events:auto}
+.screen.active .intro-card,.screen.active .envelope{pointer-events:auto}
+.screen.active .final-card{pointer-events:none}
+.screen.active .final-card .music-btn{pointer-events:auto}
 .intro-card{text-align:center;width:min(100%,520px);max-height:100%;padding:30px 16px;overflow:auto}
 .mini-line{width:45px;height:1px;background:linear-gradient(90deg,transparent,var(--rose2),transparent);margin:0 auto 24px}
 .eyebrow{font-size:10px;letter-spacing:5px;color:#f1c4d0;opacity:.8}
@@ -142,9 +144,11 @@ body{
 .music-btn{margin-top:35px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#f4dce3;border-radius:999px;padding:10px 18px;font:10px Montserrat;letter-spacing:1px;cursor:pointer}
 .music-btn span{margin-left:5px}
 .reread-btn{display:block;margin:12px auto 0}
-.music-pill{position:fixed;z-index:60;left:50%;top:max(12px,env(safe-area-inset-top));transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:9px 15px;border-radius:999px;background:rgba(20,5,13,.42);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px);font-size:9px;letter-spacing:1px;color:#e9c4ce;opacity:0;transition:1s;pointer-events:none}
-.music-pill.show{opacity:.8}
-.equalizer{height:14px;display:flex;gap:2px;align-items:center}.equalizer i{display:block;width:2px;background:#e3a3b5;height:5px;animation:eq .8s infinite alternate}.equalizer i:nth-child(2){animation-delay:.15s;height:10px}.equalizer i:nth-child(3){animation-delay:.3s;height:7px}.equalizer i:nth-child(4){animation-delay:.45s;height:12px}
+.disc{position:fixed;z-index:90;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));width:52px;height:52px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .6s ease}
+.disc.show{opacity:1;pointer-events:auto}
+.disc__vinyl{position:relative;display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,#fff8f4 0 15%,#d4577a 16% 25%,#1a070e 26% 34%,#f6d0dc 35% 39%,#12060c 40% 54%,#e7b7c6 55% 59%,#16080e 60% 78%,#f3c9d6 79% 84%,#10060a 85% 100%);box-shadow:0 0 0 2px rgba(255,226,234,.9),0 0 16px rgba(227,101,137,.55),0 8px 16px rgba(0,0,0,.4);animation:spinDisc 2.8s linear infinite;animation-play-state:paused}
+.disc__vinyl::after{content:"♡";color:#fff;font-size:9px;line-height:1}
+.disc.is-on .disc__vinyl{animation-play-state:running}
 .petal{position:absolute;top:-30px;color:#efb0c0;font-size:14px;opacity:.5;animation:fall linear forwards;pointer-events:none}
 @keyframes fall{to{transform:translate3d(var(--x),110vh,0) rotate(480deg);opacity:0}}
 @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.9;transform:scale(1.5)}}
@@ -154,7 +158,7 @@ body{
 @keyframes titleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes sparkle{0%,100%{opacity:.2;transform:scale(.65) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(18deg)}}
 @keyframes bouquetSway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(3deg)}}
-@keyframes eq{to{height:12px}}
+@keyframes spinDisc{to{transform:rotate(360deg)}}
 @media(max-width:600px){
   .lock{gap:8px}
   .lock__input{padding:12px 14px;font-size:12px}
@@ -202,10 +206,12 @@ body{
   filter:blur(.4px);
 }
 .photo-zoom[hidden]{display:none}
-.photo-zoom{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:28px 18px;background:rgba(8,2,6,.78);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .35s ease}
+.photo-zoom{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:28px 18px 22px;background:rgba(8,2,6,.78);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .35s ease}
 .photo-zoom.show{opacity:1;pointer-events:auto}
-.photo-zoom img{max-width:min(92vw,520px);max-height:82vh;border-radius:18px;object-fit:contain;background:#fff8f4;box-shadow:0 24px 70px rgba(0,0,0,.5);transform:scale(.84);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.photo-zoom__frame{margin:0;max-width:min(92vw,520px);display:flex;flex-direction:column;align-items:center;gap:14px}
+.photo-zoom img{max-width:100%;max-height:68vh;border-radius:18px;object-fit:contain;background:#fff8f4;box-shadow:0 24px 70px rgba(0,0,0,.5);transform:scale(.84);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .photo-zoom.show img{transform:scale(1)}
+.photo-zoom__wish{margin:0;max-width:34em;text-align:center;font:500 clamp(18px,4.6vw,24px) "Cormorant Garamond",serif;line-height:1.45;color:#fff6f8}
 .photo-zoom__close{position:absolute;top:18px;right:18px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:28px;line-height:1;cursor:pointer}
 @keyframes meteorFall{
   0%{transform:translate3d(0,0,0) rotate(var(--r));opacity:0}
