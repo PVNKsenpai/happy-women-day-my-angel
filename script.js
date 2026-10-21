@@ -250,19 +250,19 @@ giftBox.addEventListener("click",()=>{
   giftBox.classList.add("is-open");
   giftBox.setAttribute("aria-expanded","true");
   giftHint.hidden = true;
+  if(giftTimer) clearTimeout(giftTimer);
   window.setTimeout(()=>{
     giftReveal.hidden = false;
     requestAnimationFrame(()=>giftReveal.classList.add("show"));
+    giftTimer=setTimeout(()=>{
+      giftReveal.classList.remove("show");
+      giftReveal.hidden = true;
+      giftBox.classList.remove("is-open");
+      giftBox.setAttribute("aria-expanded","false");
+      giftHint.hidden = false;
+      showScreen(finalScreen);
+    },5000);
   },320);
-  if(giftTimer) clearTimeout(giftTimer);
-  giftTimer=setTimeout(()=>{
-    giftReveal.classList.remove("show");
-    giftReveal.hidden = true;
-    giftBox.classList.remove("is-open");
-    giftBox.setAttribute("aria-expanded","false");
-    giftHint.hidden = false;
-    showScreen(finalScreen);
-  },10000);
 });
 
 musicDisc.addEventListener("click",()=>{

@@ -180,7 +180,11 @@ body{
 .envelope.open.reading .paper-inner{height:auto;max-height:min(62dvh,560px);min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:78px;scrollbar-width:thin;scrollbar-color:#c994a5 transparent}
 .envelope.open.reading .env-back,.envelope.open.reading .env-left,.envelope.open.reading .env-right,.envelope.open.reading .env-bottom,.envelope.open.reading .env-flap,.envelope.open.reading .envelope-shadow,.envelope.open.reading .wax{opacity:0;visibility:hidden;pointer-events:none}
 .tap-hint{position:static;font-size:9px;letter-spacing:3px;color:#e7bdc9;opacity:.65;animation:pulse 2s infinite}
-.final-card{position:relative;z-index:47;text-align:center;width:min(100%,620px);max-height:100%;padding:52px 20px 28px;overflow:auto}
+.final.screen{display:flex;align-items:center;justify-content:center}
+.final-card{position:relative;z-index:47;text-align:center;width:min(100%,620px);height:100%;max-height:100%;min-height:0;padding:28px 20px 16px;display:flex;flex-direction:column;overflow:hidden}
+.final-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.final-actions{flex:none;padding:8px 0 10px}
+.final-actions .music-btn{margin-top:4px}
 .orbit-heart{width:80px;height:80px;margin:0 auto 25px;border:1px solid rgba(255,190,205,.3);border-radius:50%;display:grid;place-items:center;font-size:34px;color:#ffd8e1;box-shadow:0 0 50px rgba(235,107,145,.15);animation:float 4s ease-in-out infinite}
 .final h2{font:600 68px "Cormorant Garamond",serif;margin:15px 0 18px}
 .final-copy{font:400 23px "Cormorant Garamond",serif;line-height:1.55;color:#f3d9df}
