@@ -15,6 +15,7 @@
   <div class="aurora aurora-2"></div>
   <div class="stars" id="stars"></div>
   <div class="petals" id="petals"></div>
+  <div class="flutter" id="flutter" aria-hidden="true"></div>
   <div class="falling-gallery" id="fallingGallery"></div>
 
   <audio id="music" loop preload="auto">
@@ -34,17 +35,26 @@
         </div>
         <p class="intro-copy">Có một điều rất dịu dàng<br>anh muốn gửi đến em.</p>
         <form class="lock" id="lockForm" autocomplete="off">
-          <input
-            class="lock__input"
-            id="lockInput"
-            type="password"
-            placeholder="Nhập mật khẩu..."
-            required
-          />
-          <button class="glass-btn" id="startBtn" type="submit">
-            <span class="btn-heart">♡</span>
-            Mở lá thư
+          <button class="seal" id="sealBtn" type="button" aria-expanded="false" aria-controls="lockPanel">
+            <span class="seal__paper">
+              <span class="seal__mark" aria-hidden="true">♡</span>
+              <span class="seal__text">chỉ dành cho</span>
+              <span class="seal__name">Thu</span>
+            </span>
           </button>
+          <div class="lock__panel" id="lockPanel" hidden>
+            <input
+              class="lock__input"
+              id="lockInput"
+              type="password"
+              placeholder="Nhập mật khẩu..."
+              required
+            />
+            <button class="glass-btn" id="startBtn" type="submit">
+              <span class="btn-heart">♡</span>
+              Mở lá thư
+            </button>
+          </div>
           <p class="lock__msg" id="lockMsg" aria-live="polite"></p>
         </form>
         <p class="hint">hãy đeo tai nghe nếu có ✦</p>
@@ -129,6 +139,7 @@
         </div>
 
         <p class="tap-hint" id="tapHint">chạm vào phong thư</p>
+        <button class="to-thu" id="toThuBtn" type="button" hidden>Về trang Thu à</button>
       </div>
     </section>
 
@@ -139,16 +150,39 @@
         <h2>Thu à,</h2>
         <p class="final-copy">
           Chúc em 20/10 thật rực rỡ như chính em .<br>
-          Anh hy vọng mỗi ngày của em đầy tràn đầy niềm vui<br>
+          Anh hy vọng mỗi ngày của em đều tràn đầy niềm vui<br>
           và biết đâu, có cả một chút niềm vui từ anh nữa 😉.
         </p>
         <div class="divider"><span>✦</span></div>
         <p class="small-love">Mong rằng những ngày sau này,<br>anh vẫn có thể được ở bên để được ngắm nhìn sự xinh đẹp <br> và nụ cười rạng rỡ yêu đời của em.</p>
         <div class="forever">♡ always you ♡</div>
         <button class="music-btn reread-btn" id="rereadBtn" type="button">Đọc lại bức thư</button>
+        <button class="surprise-btn" id="surpriseBtn" type="button">Bất ngờ cho em</button>
+        <div class="gift" id="gift" hidden>
+          <button class="gift-box" id="giftBox" type="button" aria-expanded="false">
+            <span class="gift-lid" aria-hidden="true"><span class="gift-bow">♡</span></span>
+            <span class="gift-body" aria-hidden="true"></span>
+          </button>
+          <p class="gift-hint" id="giftHint">bấm vào hộp quà nha</p>
+        </div>
       </div>
     </section>
   </main>
+
+  <div class="gift-reveal" id="giftReveal" hidden>
+    <p class="gift-reveal__title">20/10 thật hạnh phúc nhé ngoan xinh yêu của a</p>
+    <div class="gift-reveal__photos" id="giftPhotos">
+      <figure class="gift-shot">
+        <img class="gift-shot__blur" src="images/qua1.jpg" alt="">
+        <img class="gift-shot__focus" src="images/qua1.jpg" alt="Món quà 1">
+      </figure>
+      <figure class="gift-shot">
+        <img class="gift-shot__blur" src="images/qua2.jpg" alt="">
+        <img class="gift-shot__focus" src="images/qua2.jpg" alt="Món quà 2">
+      </figure>
+    </div>
+    <button class="gift-back" id="giftBack" type="button">Về trang Thu à</button>
+  </div>
 
   <div class="photo-zoom" id="photoZoom" hidden>
     <button class="photo-zoom__close" id="photoZoomClose" type="button" aria-label="Đóng">×</button>

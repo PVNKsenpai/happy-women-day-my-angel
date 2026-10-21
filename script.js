@@ -10,12 +10,15 @@ const envelope = $("#envelope");
 const lockForm = $("#lockForm");
 const lockInput = $("#lockInput");
 const lockMsg = $("#lockMsg");
+const sealBtn = $("#sealBtn");
+const lockPanel = $("#lockPanel");
 const startBtn = $("#startBtn");
 const typedText = $("#typedText");
 const music = $("#music");
 const musicDisc = $("#musicDisc");
 const rereadBtn = $("#rereadBtn");
 const tapHint = $("#tapHint");
+const toThuBtn = $("#toThuBtn");
 
 const message = `Thu à,
 
@@ -92,45 +95,34 @@ function showScreen(screen){
 
 let typeTimer=null;
 let finalTimer=null;
-let typeToken=0;
 
 function typeLetter(){
-  const token=++typeToken;
   if(typeTimer) clearInterval(typeTimer);
+  typeTimer=null;
   if(finalTimer) clearTimeout(finalTimer);
   typedText.replaceChildren();
-  let i=0;
-  const paper=typedText.closest(".paper-inner");
-  typeTimer=setInterval(()=>{
-    if(token!==typeToken) return;
-    const char=message[i++];
-    if(char === "\n"){
-      typedText.insertAdjacentHTML("beforeend","<br>");
-    }else{
-      typedText.append(document.createTextNode(char));
-    }
-    if(paper) paper.scrollTop=paper.scrollHeight;
-    if(i>=message.length){
-      clearInterval(typeTimer);
-      typeTimer=null;
-      finalTimer=setTimeout(()=>showScreen(finalScreen),12000);
-    }
-  },28);
+  for(const char of message){
+    if(char === "\n") typedText.insertAdjacentHTML("beforeend","<br>");
+    else typedText.append(document.createTextNode(char));
+  }
+  toThuBtn.hidden = false;
+  finalTimer=setTimeout(()=>showScreen(finalScreen),10000);
 }
 
 function revealLetter(){
   if(finalTimer) clearTimeout(finalTimer);
-  typeToken++;
   if(typeTimer) clearInterval(typeTimer);
   typedText.replaceChildren();
   showScreen(letterScreen);
   envelope.classList.remove("open","reading");
+  toThuBtn.hidden = true;
   tapHint.textContent="chạm vào phong thư";
   void envelope.offsetWidth;
 
   setTimeout(()=>{
     envelope.classList.add("open");
     tapHint.textContent="một chút yêu thương dành cho em...";
+    releaseButterflies();
   },700);
 
   setTimeout(()=>{
@@ -140,18 +132,84 @@ function revealLetter(){
   },1800);
 }
 
+const flutter = $("#flutter");
+const wingColors = [
+  ["#f7b7c8","#e989a8"],
+  ["#ffd0de","#f3a4bc"],
+  ["#f8e2c4","#e7b7c8"],
+  ["#fff1f5","#f0a8c0"],
+  ["#f4c3d4","#d989a6"]
+];
+
+function butterflySVG(a, b){
+  return `<svg viewBox="0 0 80 64" aria-hidden="true">
+    <g class="wing left">
+      <path d="M38 34C28 10 4 8 6 28C8 42 26 46 38 36Z" fill="${a}"/>
+      <path d="M38 36C26 40 10 54 20 60C32 62 40 46 38 36Z" fill="${b}"/>
+    </g>
+    <g class="wing right">
+      <path d="M42 34C52 10 76 8 74 28C72 42 54 46 42 36Z" fill="${a}"/>
+      <path d="M42 36C54 40 70 54 60 60C48 62 40 46 42 36Z" fill="${b}"/>
+    </g>
+    <path d="M40 20c.6 8 .6 22 0 32" stroke="#5c2438" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+    <circle cx="40" cy="18" r="1.7" fill="#5c2438"/>
+  </svg>`;
+}
+
+function releaseButterflies(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const rect = envelope.getBoundingClientRect();
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height * 0.42;
+  for(let i=0;i<10;i++){
+    const b = document.createElement("span");
+    b.className = "butterfly";
+    const [a, c] = wingColors[i % wingColors.length];
+    b.innerHTML = butterflySVG(a, c);
+    const angle = -Math.PI * (0.15 + Math.random() * 0.7);
+    const dist = 180 + Math.random() * 220;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist;
+    const sway = Math.random() * 70 - 35;
+    const tilt = Math.random() * 36 - 18;
+    b.style.left = originX + "px";
+    b.style.top = originY + "px";
+    const size = 62 + Math.random() * 30;
+    b.style.width = size + "px";
+    b.style.height = (size * 0.8) + "px";
+    flutter.appendChild(b);
+    b.animate([
+      { opacity: 0, transform: "translate(0px, 16px) scale(0.35) rotate(-12deg)" },
+      { opacity: 1, transform: `translate(${dx * 0.25 + sway}px, ${dy * 0.2}px) scale(1) rotate(10deg)`, offset: 0.18 },
+      { opacity: 1, transform: `translate(${dx * 0.7 + sway}px, ${dy * 0.72}px) scale(1) rotate(${tilt}deg)`, offset: 0.62 },
+      { opacity: 0, transform: `translate(${dx + sway}px, ${dy}px) scale(0.8) rotate(${tilt}deg)` }
+    ], { duration: 3400, delay: i * 70, easing: "ease-out", fill: "forwards" });
+    setTimeout(()=>b.remove(), 5200);
+  }
+}
+
 function openLetter(){
   playMusic();
   startPetals();
   revealLetter();
 }
 
+sealBtn.addEventListener("click",()=>{
+  sealBtn.classList.add("is-gone");
+  sealBtn.setAttribute("aria-expanded","true");
+  window.setTimeout(()=>{
+    sealBtn.hidden = true;
+    lockPanel.hidden = false;
+    lockInput.focus();
+  },220);
+});
+
 lockForm.addEventListener("submit",(e)=>{
   e.preventDefault();
   const typed = lockInput.value.trim();
 
   if(typed !== PASSWORD){
-    lockMsg.textContent = "Sai mật khẩu rồi nè 😝";
+    lockMsg.textContent = "Đoán lại đi nè";
     lockForm.classList.remove("lock--shake");
     void lockForm.offsetWidth;
     lockForm.classList.add("lock--shake");
@@ -165,8 +223,6 @@ lockForm.addEventListener("submit",(e)=>{
   openLetter();
 });
 
-lockInput.focus();
-
 envelope.addEventListener("click",()=>{
   if(!envelope.classList.contains("open")){
     playMusic();
@@ -177,6 +233,46 @@ envelope.addEventListener("click",()=>{
 rereadBtn.addEventListener("click",()=>{
   playMusic();
   revealLetter();
+});
+
+const surpriseBtn = $("#surpriseBtn");
+const gift = $("#gift");
+const giftBox = $("#giftBox");
+const giftHint = $("#giftHint");
+const giftReveal = $("#giftReveal");
+const giftBack = $("#giftBack");
+
+surpriseBtn.addEventListener("click",()=>{
+  surpriseBtn.hidden = true;
+  gift.hidden = false;
+  gift.scrollIntoView({behavior:"smooth",block:"nearest"});
+});
+
+giftBox.addEventListener("click",()=>{
+  if(giftBox.classList.contains("is-open")) return;
+  giftBox.classList.add("is-open");
+  giftBox.setAttribute("aria-expanded","true");
+  giftHint.hidden = true;
+  window.setTimeout(()=>{
+    giftReveal.hidden = false;
+    requestAnimationFrame(()=>giftReveal.classList.add("show"));
+  },320);
+});
+
+function backToThu(){
+  if(finalTimer) clearTimeout(finalTimer);
+  giftReveal.classList.remove("show");
+  giftReveal.hidden = true;
+  showScreen(finalScreen);
+}
+
+toThuBtn.addEventListener("click", backToThu);
+
+giftBack.addEventListener("click",()=>{
+  giftBox.classList.remove("is-open");
+  giftBox.setAttribute("aria-expanded","false");
+  giftHint.hidden = false;
+  backToThu();
 });
 
 musicDisc.addEventListener("click",()=>{
