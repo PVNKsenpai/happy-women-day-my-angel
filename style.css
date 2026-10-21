@@ -17,7 +17,7 @@ body{
 .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:twinkle 3s ease-in-out infinite}
 .screen{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
 .screen.active{opacity:1;z-index:45;pointer-events:none}
-.screen.active .intro-card,.screen.active .envelope,.screen.active .to-thu{pointer-events:auto}
+.screen.active .intro-card,.screen.active .envelope{pointer-events:auto}
 .screen.active .final-card{pointer-events:none}
 .screen.active .final-card .music-btn,.screen.active .final-card .surprise-btn,.screen.active .final-card .gift-box{pointer-events:auto}
 .intro-card{text-align:center;width:min(100%,520px);max-height:100%;padding:30px 16px;overflow:auto}
@@ -180,8 +180,6 @@ body{
 .envelope.open.reading .paper-inner{height:auto;max-height:min(62dvh,560px);min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:78px;scrollbar-width:thin;scrollbar-color:#c994a5 transparent}
 .envelope.open.reading .env-back,.envelope.open.reading .env-left,.envelope.open.reading .env-right,.envelope.open.reading .env-bottom,.envelope.open.reading .env-flap,.envelope.open.reading .envelope-shadow,.envelope.open.reading .wax{opacity:0;visibility:hidden;pointer-events:none}
 .tap-hint{position:static;font-size:9px;letter-spacing:3px;color:#e7bdc9;opacity:.65;animation:pulse 2s infinite}
-.to-thu{display:block;margin:14px auto 0;border:1px solid rgba(255,214,224,.45);background:rgba(255,255,255,.08);color:#fff7f9;border-radius:999px;padding:10px 18px;font:600 12px Montserrat,sans-serif;letter-spacing:.4px;cursor:pointer}
-.to-thu[hidden]{display:none}
 .final-card{position:relative;z-index:47;text-align:center;width:min(100%,620px);max-height:100%;padding:52px 20px 28px;overflow:auto}
 .orbit-heart{width:80px;height:80px;margin:0 auto 25px;border:1px solid rgba(255,190,205,.3);border-radius:50%;display:grid;place-items:center;font-size:34px;color:#ffd8e1;box-shadow:0 0 50px rgba(235,107,145,.15);animation:float 4s ease-in-out infinite}
 .final h2{font:600 68px "Cormorant Garamond",serif;margin:15px 0 18px}
@@ -215,7 +213,6 @@ body{
 .gift-shot__focus{-webkit-mask-image:radial-gradient(ellipse at 50% 46%,#000 28%,rgba(0,0,0,.72) 48%,transparent 74%);mask-image:radial-gradient(ellipse at 50% 46%,#000 28%,rgba(0,0,0,.72) 48%,transparent 74%)}
 .gift-reveal.show .gift-shot:first-child{animation:burstLeft .95s cubic-bezier(.16,.84,.3,1) .12s forwards}
 .gift-reveal.show .gift-shot:last-child{animation:burstRight .95s cubic-bezier(.16,.84,.3,1) .26s forwards}
-.gift-back{margin-top:8px;border:1px solid rgba(255,214,224,.45);background:rgba(255,255,255,.1);color:#fff7f9;border-radius:999px;padding:11px 20px;font:600 12px Montserrat,sans-serif;letter-spacing:.6px;cursor:pointer}
 @keyframes giftTitle{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
 @keyframes burstLeft{0%{opacity:0;transform:translate(34%,42vh) scale(.12) rotate(-12deg)}55%{opacity:1}100%{opacity:1;transform:translate(0,0) scale(1) rotate(-3deg)}}
 @keyframes burstRight{0%{opacity:0;transform:translate(-34%,42vh) scale(.12) rotate(12deg)}55%{opacity:1}100%{opacity:1;transform:translate(0,0) scale(1) rotate(3deg)}}

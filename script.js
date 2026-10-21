@@ -18,7 +18,6 @@ const music = $("#music");
 const musicDisc = $("#musicDisc");
 const rereadBtn = $("#rereadBtn");
 const tapHint = $("#tapHint");
-const toThuBtn = $("#toThuBtn");
 
 const message = `Thu à,
 
@@ -105,7 +104,6 @@ function typeLetter(){
     if(char === "\n") typedText.insertAdjacentHTML("beforeend","<br>");
     else typedText.append(document.createTextNode(char));
   }
-  toThuBtn.hidden = false;
   finalTimer=setTimeout(()=>showScreen(finalScreen),10000);
 }
 
@@ -115,7 +113,6 @@ function revealLetter(){
   typedText.replaceChildren();
   showScreen(letterScreen);
   envelope.classList.remove("open","reading");
-  toThuBtn.hidden = true;
   tapHint.textContent="chạm vào phong thư";
   void envelope.offsetWidth;
 
@@ -240,7 +237,7 @@ const gift = $("#gift");
 const giftBox = $("#giftBox");
 const giftHint = $("#giftHint");
 const giftReveal = $("#giftReveal");
-const giftBack = $("#giftBack");
+let giftTimer=null;
 
 surpriseBtn.addEventListener("click",()=>{
   surpriseBtn.hidden = true;
@@ -257,22 +254,15 @@ giftBox.addEventListener("click",()=>{
     giftReveal.hidden = false;
     requestAnimationFrame(()=>giftReveal.classList.add("show"));
   },320);
-});
-
-function backToThu(){
-  if(finalTimer) clearTimeout(finalTimer);
-  giftReveal.classList.remove("show");
-  giftReveal.hidden = true;
-  showScreen(finalScreen);
-}
-
-toThuBtn.addEventListener("click", backToThu);
-
-giftBack.addEventListener("click",()=>{
-  giftBox.classList.remove("is-open");
-  giftBox.setAttribute("aria-expanded","false");
-  giftHint.hidden = false;
-  backToThu();
+  if(giftTimer) clearTimeout(giftTimer);
+  giftTimer=setTimeout(()=>{
+    giftReveal.classList.remove("show");
+    giftReveal.hidden = true;
+    giftBox.classList.remove("is-open");
+    giftBox.setAttribute("aria-expanded","false");
+    giftHint.hidden = false;
+    showScreen(finalScreen);
+  },10000);
 });
 
 musicDisc.addEventListener("click",()=>{
