@@ -145,7 +145,6 @@
         <div class="divider"><span>✦</span></div>
         <p class="small-love">Mong rằng những ngày sau này,<br>anh vẫn có thể được ở bên để được ngắm nhìn sự xinh đẹp <br> và nụ cười rạng rỡ yêu đời của em.</p>
         <div class="forever">♡ always you ♡</div>
-        <button class="music-btn" id="musicBtn" type="button">♫ <span>Nhạc đang phát</span></button>
         <button class="music-btn reread-btn" id="rereadBtn" type="button">Đọc lại bức thư</button>
       </div>
     </section>
@@ -153,13 +152,15 @@
 
   <div class="photo-zoom" id="photoZoom" hidden>
     <button class="photo-zoom__close" id="photoZoomClose" type="button" aria-label="Đóng">×</button>
-    <img id="photoZoomImg" alt="Ảnh của Thu">
+    <figure class="photo-zoom__frame">
+      <img id="photoZoomImg" alt="Ảnh của Thu">
+      <figcaption class="photo-zoom__wish" id="photoZoomWish"></figcaption>
+    </figure>
   </div>
 
-  <div class="music-pill" id="musicPill">
-    <span class="equalizer"><i></i><i></i><i></i><i></i></span>
-    <span>Thế giới của anh</span>
-  </div>
+  <button class="disc" id="musicDisc" type="button" aria-label="Bật tắt nhạc" aria-pressed="false">
+    <span class="disc__vinyl" aria-hidden="true"></span>
+  </button>
 
   <script src="script.js"></script>
 </body>
